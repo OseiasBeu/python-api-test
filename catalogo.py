@@ -8,6 +8,11 @@ client = MongoClient()
 db = client.teste_db
 collection = db.catalogo
 
-
+@app.route('/get_records', methods=['GET'])
+def get_records():
+    saida = []
+    for data in collection.find():
+        saida.append({'nome': data['nome'], 'email': data['email'], 'telefone': data['telefone']})
+    return jsonify({'catalogo': saida})
 
 
