@@ -15,4 +15,14 @@ def get_records():
         saida.append({'nome': data['nome'], 'email': data['email'], 'telefone': data['telefone']})
     return jsonify({'catalogo': saida})
 
+@app.route('/insert_record', methods=['POST'])
+def insert_record():
+  nome = request.json['nome']
+  email = request.json['email']
+  telefone = request.json['telefone']
+  cat_id = collection.insert({'nome': nome, 'email': email, 'telefone': telefone})
+  new_cat = collection.find_one({'_id': cat_id})
+  saida = {'nome': new_cat['nome'], 'email': new_cat['email'], 'telefone': new_cat['telefone']}
+  return jsonify({'catalogo': saida})
+
 
